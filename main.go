@@ -8,12 +8,13 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/shakeel/pdf2txt/pdf"
+	"github.com/niikoo/pdf2txt/pdf"
 )
 
 var (
 	verbose     = flag.Bool("verbose", false, "verbose output")
-	outFilepath = flag.String("out", "./out/", "`filepath` for writing output")
+	outFilepath = flag.String("out", "", "`filepath` for writing output")
+	toStdout    = flag.Bool("stdout", true, "Use stdout for output (default)")
 )
 
 func init() {
@@ -38,9 +39,11 @@ func main() {
 		usage()
 	}
 
-	err := os.MkdirAll(*outFilepath, 0644)
-	if err != nil {
-		fatalf("fatal error %v", err)
+	if *toStdout == false {
+		err := os.MkdirAll(*outFilepath, 0644)
+		if err != nil {
+			fatalf("fatal error %v", err)
+		}
 	}
 
 	for _, in := range flag.Args() {
@@ -48,9 +51,11 @@ func main() {
 		if err != nil {
 			fatalf("fatal error %v", err)
 		}
-
 		out := strings.Replace(filepath.Join(*outFilepath, filepath.Base(in)), ".pdf", ".txt", 1)
-		writer, err := os.Create(out)
+		writer := os.Stdout
+		if !*toStdout {
+			writer, err = os.Create(out)
+		}
 		if err != nil {
 			fatalf("fatal error %v", err)
 		}
