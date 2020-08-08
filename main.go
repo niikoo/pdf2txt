@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/niikoo/pdf2txt/pdf/v1"
+	"github.com/niikoo/pdf2txt/pdf"
 )
 
 var (
