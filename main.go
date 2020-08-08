@@ -39,6 +39,14 @@ func main() {
 		usage()
 	}
 
+	if *toStdout == true && *outFilepath != "" {
+		fatalf("fatal error. You cant leave stdout on and in addition provide an output directory.")
+	}
+
+	if *toStdout == false && *outFilepath == "" {
+		fatalf("fatal error. You cant leave stdout off and not provide an output directory.")
+	}
+
 	if *toStdout == false {
 		err := os.MkdirAll(*outFilepath, 0644)
 		if err != nil {
