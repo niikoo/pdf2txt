@@ -40,11 +40,13 @@ Usage of pdf2txt:
 pdf2txt [flags] pdf-file ...
 
   -out filepath
-        filepath for writing output (default "./out/")
+        filepath for writing output
+  -stdout
+        Use stdout for output (default) (default true)
   -verbose
         verbose output
 ```
 
-If you do not specify `-out` option the text file will be in the `./out` folder and the filename will be the same as your PDF file with the extension replaced with `.txt`.
+If you do specify `-out` option as for example `./out`, the text file will be in the `./out` folder, and the filename will be the same as your PDF file with the new file extension `.txt`.
 
 Enjoy!
